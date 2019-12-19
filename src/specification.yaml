@@ -1,13 +1,67 @@
 openapi: 3.0.1
-info:
-  title: Photo Sharing Service
+info: 
+  title: Photo Sharing Service 
   version: "1.0.0"
-servers:
-  - url: http://localhost:3000/api
+servers: 
+  - url: http://localhost:3000
     description: localhost
-  - url: https://{domain}/api
-    description: Production Server
-    variables:
-      domain:
-        default: localhost:3000
-        description: Domain
+paths: 
+    /api/images:
+      get:
+        summary: Get a list of uploaded URIs
+        tags:
+          - Images
+        responses:
+          200:
+            description: OK
+            content: 
+              application/json:
+                schema:
+                  type: object
+                  additionalProperties: false
+                  properties: 
+                    imageURIs:
+                      type: array
+                      items: 
+                        type: string
+                    statusCode:
+                      type: integer
+                  required:
+                    - imageURIs
+      post:
+        summary: Upload an image to share
+        tags: 
+          - Images
+        requestBody:
+          description: Picture data that is one of gif, jpeg, or png
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  image:
+                    type: string
+                    format: binary
+                required: 
+                  - image
+        responses:
+          200:
+            description: OK
+            content: 
+              application/json:
+                schema:
+                  type: object
+                  additionalProperties: false
+                  properties: 
+                    imageURIs:
+                      type: array
+                      items: 
+                        type: string
+                    statusCode:
+                      type: integer
+                  required:
+                    - imageURIs
+                  
+                  
