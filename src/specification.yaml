@@ -3,10 +3,16 @@ info:
   title: Photo Sharing Service 
   version: "1.0.0"
 servers: 
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api
     description: localhost
+  - url: https://{domain}/api
+    description: Production Server
+    variables: 
+      domain:
+        default:
+        description: Domain
 paths: 
-    /api/images:
+    /images:
       get:
         summary: Get a list of uploaded URIs
         tags:
