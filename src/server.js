@@ -4,7 +4,8 @@ import { StaticRouter } from "react-router-dom";
 import express from "express";
 import { renderToString } from "react-dom/server";
 import swaggerDocsRouter from "./swaggerDocsRouter";
-import { getImages, postImage } from "./controllers"
+import { getImages, postImage } from "./controllers";
+import multer from "multer"
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -12,7 +13,7 @@ const server = express();
 server
   .disable("x-powered-by")
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-  .post("/api/images", postImage)
+  .post("/api/images", multer().single("image"), postImage)
   .get("/api/images", getImages)
   .use("/api", swaggerDocsRouter)
   .get("/*", (req, res) => {
